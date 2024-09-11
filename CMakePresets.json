@@ -1,0 +1,175 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "msvc",
+            "hidden": true,
+            "displayName": "MSVC Compiler with Ninja build system",
+            "description": "Using MSVC with Ninja",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "x64-msvc-debug",
+            "displayName": "MSVC - Debug (x64)",
+            "inherits": "msvc",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "x64-msvc-release",
+            "displayName": "MSVC - Release (x64)",
+            "inherits": "x64-msvc-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "gnu",
+            "hidden": true,
+            "displayName": "GNU Compiler with Ninja build system",
+            "description": "Using GNU Compiler with Ninja",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "x64-gnu-debug",
+            "displayName": "GNU - Debug (x64)",
+            "inherits": "gnu",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "x64-gnu-release",
+            "displayName": "GNU - Release (x64)",
+            "inherits": "x64-gnu-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "x64-msvc-build-debug",
+            "displayName": "Debug Build",
+            "description": "Build using MSVC in Debug mode",
+            "configurePreset": "x64-msvc-debug",
+            "targets": "cmake-cpp-template-msvc-debug"
+        },
+        {
+            "name": "x64-msvc-clean-build-debug",
+            "displayName": "Clean Debug Build",
+            "description": "Clean and build using MSVC in Debug mode",
+            "configurePreset": "x64-msvc-debug",
+            "cleanFirst": true,
+            "targets": "cmake-cpp-template-msvc-debug"
+        },
+        {
+            "name": "x64-msvc-build-release",
+            "displayName": "Release Build",
+            "description": "Build using MSVC in Release mode",
+            "configurePreset": "x64-msvc-release",
+            "targets": "cmake-cpp-template-msvc-release"
+        },
+        {
+            "name": "x64-msvc-clean-build-release",
+            "displayName": "Clean Release Build",
+            "description": "Clean and build using MSVC in Release mode",
+            "configurePreset": "x64-msvc-release",
+            "cleanFirst": true,
+            "targets": "cmake-cpp-template-msvc-release"
+        },
+        {
+            "name": "x64-gnu-build-debug",
+            "displayName": "Debug Build",
+            "description": "Build using GNU Compiler in Debug mode",
+            "configurePreset": "x64-gnu-debug",
+            "targets": "cmake-cpp-template-gnu-debug"
+        },
+        {
+            "name": "x64-gnu-clean-build-debug",
+            "displayName": "Clean Debug Build",
+            "description": "Clean and build using GNU Compiler in Debug mode",
+            "configurePreset": "x64-gnu-debug",
+            "cleanFirst": true,
+            "targets": "cmake-cpp-template-gnu-debug"
+        },
+        {
+            "name": "x64-gnu-build-release",
+            "displayName": "Release Build",
+            "description": "Build using GNU Compiler in Release mode",
+            "configurePreset": "x64-gnu-release",
+            "targets": "cmake-cpp-template-gnu-debug"
+        },
+        {
+            "name": "x64-gnu-clean-build-release",
+            "displayName": "Clean Release Build",
+            "description": "Clean and build using GNU Compiler in Release mode",
+            "configurePreset": "x64-gnu-release",
+            "cleanFirst": true,
+            "targets": "cmake-cpp-template-gnu-debug"
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "x64-msvc-workflow-debug",
+            "displayName": "MSVC - Debug Workflow (x64)",
+            "description": "Workflow for building and cleaning in Debug mode using MSVC",
+            "steps": [
+                {
+                    "name": "x64-msvc-debug",
+                    "type": "configure"
+                },
+                {
+                    "name": "x64-msvc-clean-build-debug",
+                    "type": "build"
+                }
+            ]
+        },
+        {
+            "name": "x64-gnu-workflow-debug",
+            "displayName": "GNU - Debug Workflow (x64)",
+            "description": "Workflow for building and cleaning in Debug mode using GNU Compiler",
+            "steps": [
+                {
+                    "name": "x64-gnu-debug",
+                    "type": "configure"
+                },
+                {
+                    "name": "x64-gnu-clean-build-debug",
+                    "type": "build"
+                }
+            ]
+        }
+    ]
+}
