@@ -57,6 +57,7 @@ IndentExternBlock: Indent
 IndentRequires: false
 IndentWidth: 4
 IndentWrappedFunctionNames: false
+InsertNewlineAtEOF: true
 KeepEmptyLinesAtTheStartOfBlocks: false
 NamespaceIndentation: All
 PointerAlignment: Left
